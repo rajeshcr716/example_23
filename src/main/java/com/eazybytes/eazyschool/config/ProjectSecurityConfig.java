@@ -6,7 +6,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -31,7 +33,10 @@ public class ProjectSecurityConfig  {
         http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**").and()
                 .authorizeRequests()
                 .mvcMatchers("/dashboard").authenticated()
+                .mvcMatchers("/displayProfile").authenticated()
+                .mvcMatchers("/updateProfile").authenticated()
                 .mvcMatchers("/displayMessages").hasRole("ADMIN")
+                .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .mvcMatchers("/home").permitAll()
                 .mvcMatchers("/holidays/**").permitAll()
                 .mvcMatchers("/contact").permitAll()
@@ -50,8 +55,8 @@ public class ProjectSecurityConfig  {
         }
 
 
-
-    /*@Bean
+/*
+     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
 
         UserDetails admin = User.withDefaultPasswordEncoder()
@@ -69,12 +74,10 @@ public class ProjectSecurityConfig  {
     }*/
 
 
-
-
-
-
-
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 
 }

@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class EazySchoolUsernamePwdAuthenticationProvider implements Authenticati
     @Autowired
     private PersonRepositary personRepository;
 
+
+   @Autowired
+   private PasswordEncoder passwordEncoder;
+
     @Override
    //using authentication object we receiving the authentication parameter
     public Authentication authenticate(Authentication authentication)
@@ -41,12 +46,16 @@ public class EazySchoolUsernamePwdAuthenticationProvider implements Authenticati
         Person person = personRepository.readByEmail(email);
 
         if(null != person && person.getPersonId()>0 &&
-            pwd.equals(person.getPwd())){
+                passwordEncoder.matches(pwd,person.getPwd()))      {
+
+            // pas..matches() --> convert user entered pw into hash text after it start to compare hash aleready present in db.
+
+            /*pwd.equals(person.getPwd())*/
             /*now here, in order to send the roles information to mainspring security "UsernamePasswordAuthenticationToken
             sent in the format of granted authority.  grant authority has interface inside spring in that we mention particular
             role of the person "*/
             return new UsernamePasswordAuthenticationToken(
-                    person.getName(), pwd, getGrantedAuthorities(person.getRoles()));
+                    email, pwd, getGrantedAuthorities(person.getRoles()));
            /*  Once my spring security is confident that the authentication operation is completed successfully,
              it  is going to erase the password credentials that are available inside this object.
              security purpose spring will not hold the pwd object       */

@@ -4,6 +4,7 @@ import com.eazybytes.eazyschool.annotation.FieldsValueMatch;
 import com.eazybytes.eazyschool.annotation.PasswordValidator;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -44,6 +45,7 @@ public class Person extends BaseEntity{
 
     @NotBlank(message="Email must not be blank")
     @Email(message = "Please provide a valid email address" )
+
     private String email;
 
     @NotBlank(message="Confirm Email must not be blank")
@@ -83,7 +85,12 @@ public class Person extends BaseEntity{
     @JoinColumn(name = "address_id", referencedColumnName = "addressId",nullable = true)
     private Address address;
 
-
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)
+    private EazyClass eazyClass;
     //FETCH-->LAZY
     //when loading person entiry it will not read and load the child entiry ex: lazy fecting of person it does't fetch the Address table..
+
+  // @JoinColumn annotation is used to specify the foreign key details.
+
 }
