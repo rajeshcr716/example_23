@@ -39,6 +39,16 @@ public class DashboardController {
         model.addAttribute("roles", authentication.getAuthorities().toString());
         // get the roles by ".getAuthorities()"
 
+       /* Below section is used when student login it show which class is assigned / enrolled.
+       model.addAttribute("enrolledClass", person.getEazyClass().getName());
+       using we pass the data to front end .. so that in dashboard.html line no: 46 we defined "enrolledClass" object using thymleaf.
+       <p class="" th:if="${!#strings.isEmpty(enrolledClass)}" th:text="${'Your assigned class is - [' + enrolledClass+']'}"></p>
+        */
+
+        if(null != person.getEazyClass() && null != person.getEazyClass().getName()){
+            model.addAttribute("enrolledClass", person.getEazyClass().getName());
+        }
+
 
         session.setAttribute("loggedInPerson", person);
 

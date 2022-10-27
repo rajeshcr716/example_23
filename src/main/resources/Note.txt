@@ -1,0 +1,62 @@
+messages..Pagination
+line no: 85
+ 1)
+ <a th:if="${currentPage > 1}" th:href="@{'/displayMessages/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+    <span class="fa fa-angle-double-left" aria-hidden="true"></span>
+  </a>
+  --Above one is used for pagination in front end. if we are in 1st page then not able to move backward(<< button)
+
+  2)
+  <a th:unless="${currentPage > 1}" class="not-allowed" disabled="">
+        <span class="fa fa-angle-double-left" aria-hidden="true"></span>
+  </a>
+  if current page is 1. then "<<" this symbol will getting blurred/disabled.
+
+  <a th:unless="${currentPage < totalPages}" class="not-allowed" disabled="">
+  <span class="fa fa-angle-double-right" aria-hidden="true"></span>
+  </a>
+  if we are in last page then need to disable(">>") so above logic is used.. other logic need to check ...
+
+
+  <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+ <li>
+    <a th:if="${currentPage != i}" th:href="@{'/displayMessages/page/' + ${i}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+    <a class="active" th:unless="${currentPage != i}">[[${i}]]</a>
+ </li>
+  </span>
+
+  above thymleaf code work like for each page 1 to last page.
+  th:unless="${currentPage != i} --- means if you are in 4th page then click 4th thymlead href will not work.. click other page it
+  will re-directed to other pages.
+
+
+3)
+
+ <table class="table table-striped dataTable">
+            <thead class="table-dark">
+            <tr>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Name</a>
+                </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=mobileNum&sortDir=' + ${reverseSortDir}}">Mobile Num</a>
+                </th>
+
+ --- we using pagination technic in front end.  ${reverseSortDir} means when enter to page above line showing
+http://localhost:8080/displayMessages/page/1?sortField=name&sortDir=asc
+ if you click on any colum heading like Name,MobileNUm..etc. after it sorted. and heder link showing
+ http://localhost:8080/displayMessages/page/1?sortField=name&sortDir=desc
+
+
+
+
+
+
+
+
+
+
+
+
+
+

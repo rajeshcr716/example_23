@@ -3,6 +3,8 @@ package com.eazybytes.eazyschool.model;
 import com.eazybytes.eazyschool.annotation.FieldsValueMatch;
 import com.eazybytes.eazyschool.annotation.PasswordValidator;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.UniqueElements;
 
@@ -11,8 +13,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+//@Data
+@Getter
+@Setter
+
 @Entity
 @FieldsValueMatch.List({   //click on the ".List"
         // see "field" and "fieldMatch" ..need to compare . validation happend in "@FieldValueMatch..inside implemented class
@@ -88,9 +95,28 @@ public class Person extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)
     private EazyClass eazyClass;
-    //FETCH-->LAZY
-    //when loading person entiry it will not read and load the child entiry ex: lazy fecting of person it does't fetch the Address table..
+ /*
+     FETCH-->LAZY
+    when loading person entiry it will not read and load the child entiry ex: lazy fecting of person it does't fetch the Address table..
+    @JoinColumn annotation is used to specify the foreign key details.
+*/
 
-  // @JoinColumn annotation is used to specify the foreign key details.
+
+/* @JoinTable is used to join the column from different table
+name = "person_courses" means this is the table name contain PERSON_ID and COURSE_ID
+referencedColumnName = "personId" column name in the person table is ref column.
+ inverseJoinColumns  means need join from other table column then ...it will be used.
+ */
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "person_courses",
+            joinColumns = {
+                    @JoinColumn(name = "person_id", referencedColumnName = "personId")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "course_id", referencedColumnName = "courseId")})
+    private Set<Courses> courses = new HashSet<>();
+
+
+
+
 
 }

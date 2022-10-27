@@ -1,5 +1,8 @@
 package com.eazybytes.eazyschool.model;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +11,10 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
+//@Data --We commented because lombok create toString() method but we no more need
+//it will will create issue in jpa operation.
+@Getter
+@Setter
 @Table(name = "class")
 public class EazyClass extends BaseEntity{
 
