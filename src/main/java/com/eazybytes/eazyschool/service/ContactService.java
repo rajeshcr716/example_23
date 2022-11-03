@@ -1,6 +1,7 @@
 package com.eazybytes.eazyschool.service;
 
 
+import com.eazybytes.eazyschool.config.EazySchoolProps;
 import com.eazybytes.eazyschool.constants.EazySchoolConstants;
 import com.eazybytes.eazyschool.model.Contact;
 
@@ -54,6 +55,9 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
+    @Autowired
+    EazySchoolProps eazySchoolProps;
+
     /**
      * Save Contact Details into DB
      *
@@ -83,7 +87,21 @@ public class ContactService {
     getting the pageno from the UI.
     */
     public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField, String sortDir){
-        int pageSize = 5;
+
+       /*  see this one commented because by default valu it taking from eazySchoolProps and application propertes.
+        */
+
+        //  int pageSize = 5;
+
+
+
+        int pageSize = eazySchoolProps.getPageSize();
+        if(null!=eazySchoolProps.getContact() && null!=eazySchoolProps.getContact().get("pageSize")){
+            pageSize = Integer.parseInt(eazySchoolProps.getContact().get("pageSize").trim());
+        }
+
+
+
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
              /*   BELOW   if we see this is a ternary operator that we have inside the Java.
              So what I am doing here is if my sort of direction is equal to ascending. I'm trying to build my sort object
@@ -104,7 +122,7 @@ public class ContactService {
       Now go to contact controller..we get this on line no. 66
        */
 
-        Page<Contact> msgPage = contactRepository.findByStatus(EazySchoolConstants.OPEN,pageable);
+        Page<Contact> msgPage = contactRepository.findByStatusWithRepository(EazySchoolConstants.OPEN,pageable);
         return msgPage;
     }
 

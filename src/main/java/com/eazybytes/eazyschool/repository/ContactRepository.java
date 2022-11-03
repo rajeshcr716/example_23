@@ -80,7 +80,7 @@ List<Contact> findByStatus(String status);
   @Query(value = "SELECT * FROM contact_msg WHERE contact_msg.status = :status", nativeQuery = true)
 
     // page is an inbuilt interface
-  Page<Contact> findByStatus(@Param("status") String status, Pageable pageable);
+  Page<Contact> findByStatusWithRepository(@Param("status") String status, Pageable pageable);
   /*
   "status" The first one is  what is the status that we need to  fetch from the record from db
 

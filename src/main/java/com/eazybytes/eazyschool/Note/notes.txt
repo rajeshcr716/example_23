@@ -1,0 +1,2 @@
+data and view part can be done by freemarker, velocity, and thymeleaf.
+Using rest return view and model is not needed no more.

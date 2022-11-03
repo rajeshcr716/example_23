@@ -22,6 +22,9 @@ This makes our code short and clean.
 @SqlResultSetMappings({
         @SqlResultSetMapping(name = "SqlResultSetMapping.count", columns = @ColumnResult(name = "cnt"))
 })
+
+// refet example 45 & 44 for revise section.
+
 @NamedQueries({
         @NamedQuery(name = "Contact.findOpenMsgs",
                 query = "SELECT c FROM Contact c WHERE c.status = :status"),

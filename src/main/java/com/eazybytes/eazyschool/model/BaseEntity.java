@@ -1,5 +1,6 @@
 package com.eazybytes.eazyschool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,20 +19,30 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
+
+    /*
+    @JsonIgnore means When we sending the Response some column not needed to send then we
+    apply jsonIgnore annotation in the POJO class
+
+    */
     @CreatedDate
     @Column(updatable = false)
+    @JsonIgnore
     private LocalDateTime createdAt;
 
     @CreatedBy
     @Column(updatable = false)
+    @JsonIgnore
     private String createdBy;
 
     @LastModifiedDate
     @Column(insertable = false)
+    @JsonIgnore
     private LocalDateTime updatedAt;
 
 
     @LastModifiedBy
     @Column(insertable = false)
+    @JsonIgnore
     private String updatedBy;
 }

@@ -30,7 +30,8 @@ public class ProjectSecurityConfig  {
 // NOTE: if we not disable then contact save msg will be not submitted.. thhmleaf not used in contact.html
         // CSRF: cross side request forgery
      //   http.authorizeRequests()
-        http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**").and()
+        http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**")
+                .ignoringAntMatchers("/api/**").ignoringAntMatchers("/data-api/**").and()
                 .authorizeRequests()
                 .mvcMatchers("/dashboard").authenticated()
                 .mvcMatchers("/displayProfile").authenticated()
@@ -38,6 +39,8 @@ public class ProjectSecurityConfig  {
                 .mvcMatchers("/student/**").hasRole("STUDENT")
                 .mvcMatchers("/displayMessages").hasRole("ADMIN")
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
+                .mvcMatchers("/api/**").authenticated()
+                .mvcMatchers("/data-api/**").authenticated()
                 .mvcMatchers("/home").permitAll()
                 .mvcMatchers("/holidays/**").permitAll()
                 .mvcMatchers("/contact").permitAll()

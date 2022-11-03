@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
-@Controller
+@Controller("profileControllerBean")
 public class ProfileController {
 
     @Autowired
