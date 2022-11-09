@@ -31,7 +31,9 @@ public class ProjectSecurityConfig  {
         // CSRF: cross side request forgery
      //   http.authorizeRequests()
         http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**")
-                .ignoringAntMatchers("/api/**").ignoringAntMatchers("/data-api/**").and()
+                .ignoringAntMatchers("/api/**").ignoringAntMatchers("/data-api/**")
+                .ignoringAntMatchers("/eazyschool/actuator/**")
+                .and()
                 .authorizeRequests()
                 .mvcMatchers("/dashboard").authenticated()
                 .mvcMatchers("/displayProfile").authenticated()
@@ -39,6 +41,7 @@ public class ProjectSecurityConfig  {
                 .mvcMatchers("/student/**").hasRole("STUDENT")
                 .mvcMatchers("/displayMessages").hasRole("ADMIN")
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
+                .mvcMatchers("/eazyschool/actuator/**").hasRole("ADMIN")
                 .mvcMatchers("/api/**").authenticated()
                 .mvcMatchers("/data-api/**").authenticated()
                 .mvcMatchers("/home").permitAll()

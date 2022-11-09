@@ -28,6 +28,9 @@ public class DashboardController {
     @Autowired
     PersonRepositary personRepositary;
 
+   /* Whenver we using @Value need to mention property value. In that "$" symbol is required.
+   because to access a specific variable.
+   */
     @Value("${eazyschool.pageSize}")
     private int defaultPageSize;
 

@@ -93,9 +93,7 @@ public class ContactService {
 
         //  int pageSize = 5;
 
-
-
-        int pageSize = eazySchoolProps.getPageSize();
+        int pageSize = eazySchoolProps.getPageSize(); // taken form eazyprops.
         if(null!=eazySchoolProps.getContact() && null!=eazySchoolProps.getContact().get("pageSize")){
             pageSize = Integer.parseInt(eazySchoolProps.getContact().get("pageSize").trim());
         }

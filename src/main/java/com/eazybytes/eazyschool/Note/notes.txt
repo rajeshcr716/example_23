@@ -1,2 +1,8 @@
+1)
 data and view part can be done by freemarker, velocity, and thymeleaf.
 Using rest return view and model is not needed no more.
+
+
+2) Application.Properties
+In application.properties we can manually add custom properties like uat,prod.  it overide the application.prop
+every we not able to change depend upon our requirment we switch custom properties.
